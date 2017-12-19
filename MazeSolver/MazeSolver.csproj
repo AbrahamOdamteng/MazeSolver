@@ -50,9 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MazePuzzle.cs" />
+    <Compile Include="MazeRunner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTests\MazeUnitTests.cs" />
+    <Compile Include="UnitTests\MazePuzzleUnitTests.cs" />
+    <Compile Include="UnitTests\MazeRunnerUnitTests.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

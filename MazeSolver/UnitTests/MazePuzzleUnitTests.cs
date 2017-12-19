@@ -5,7 +5,7 @@ using System.Linq;
 namespace MazeSolver.UnitTests
 {
     [TestFixture]
-    class MazeUnitTests
+    class MazePuzzleUnitTests
     {
         [Test]        
         public void Test_ParseMazeParameters()
@@ -29,18 +29,19 @@ namespace MazeSolver.UnitTests
         [Test]
         public void Test_LoadMaze()
         {
-            var mazeFilePath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestMazes\tiny_maze.txt");
+            var mazeFilePath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestMazes\small_maze.txt");
             var lines = File.ReadAllLines(mazeFilePath);
 
             var mazeSize = MazePuzzle.ParseMazeParameters(lines[0]);
             var result = MazePuzzle.LoadMaze(lines.Skip(3).ToArray(), mazeSize.X, mazeSize.Y);
             var expected = new int[,]
             {
-                { 1, 1, 1, 1, 1 },
-                { 1, 0, 1, 0, 1 },
-                { 1, 0, 1, 0, 1 },
-                { 1, 0, 0, 0, 1 },
-                { 1, 1, 1, 1, 1 }
+                {1,1,1,1,1},
+                {1,0,0,0,1},
+                {1,0,1,0,1},
+                {1,0,1,0,1},
+                {1,0,1,0,1},
+                {1,1,1,1,1}
             };
 
             CollectionAssert.AreEqual(expected, result);
@@ -87,21 +88,22 @@ namespace MazeSolver.UnitTests
         [Test]
         public void Test_MazePuzzle_Constructor()
         {
-            var mazeFilePath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestMazes\tiny_maze.txt");
+            var mazeFilePath = Path.Combine(TestContext.CurrentContext.TestDirectory, @"TestMazes\small_maze.txt");
 
             var mazePuzzle = new MazePuzzle(mazeFilePath);
-            
+
             var expected = new int[,]
             {
-                { 1, 1, 1, 1, 1 },
-                { 1, 0, 1, 0, 1 },
-                { 1, 0, 1, 0, 1 },
-                { 1, 0, 0, 0, 1 },
-                { 1, 1, 1, 1, 1 }
+                {1,1,1,1,1},
+                {1,0,0,0,1},
+                {1,0,1,0,1},
+                {1,0,1,0,1},
+                {1,0,1,0,1},
+                {1,1,1,1,1}
             };
 
             Assert.That(mazePuzzle.StartPoint, Is.EqualTo(new Point(1, 1)));
-            Assert.That(mazePuzzle.EndPoint, Is.EqualTo(new Point(3, 3)));
+            Assert.That(mazePuzzle.EndPoint, Is.EqualTo(new Point(3, 4)));
             Assert.That(mazePuzzle.Maze, Is.EqualTo(expected));
         }
     }

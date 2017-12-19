@@ -30,20 +30,22 @@ namespace MazeSolver
                 throw new ArgumentException("Maze Height is incorrect");
             }
 
-            var maze = new int[mazeWidth, mazeHeight];
+            var maze = new int[mazeHeight, mazeWidth];
 
-            for(int x = 0; x < mazeWidth; x++)
+            
+
+            for (int y = 0; y < mazeHeight; y++)
             {
-                var rowString = mazeArray[x];
+                var rowString = mazeArray[y];
                 var rowArray = rowString.Split();
                 if (rowArray.Length != mazeWidth)
                 {
-                    throw new ArgumentException(string.Format("row {0} is invalid due to length", x));
+                    throw new ArgumentException(string.Format("row {0} is invalid due to length", y));
                 }
 
-                for (int y = 0; y < mazeHeight; y++)
+                for (int x = 0; x < mazeWidth; x++)
                 {
-                    maze[x, y] = Convert.ToInt32(rowArray[y]);
+                    maze[y, x] = Convert.ToInt32(rowArray[x]);
                 }
             }
             return maze;
