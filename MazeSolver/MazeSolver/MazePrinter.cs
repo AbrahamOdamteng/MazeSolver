@@ -7,8 +7,13 @@ namespace MazeSolver
 {
     static class MazePrinter
     {
-
-        static internal string  PrintMaze(int[,] maze, IEnumerable<Point> escapeRoute)
+        /// <summary>
+        /// Print the maze into the format described in README.txt
+        /// </summary>
+        /// <param name="maze">the maze to print</param>
+        /// <param name="route">The route from the startPoint to the endPoint</param>
+        /// <returns>A string representation of the array and the route taken through it</returns>
+        static internal string  PrintMaze(int[,] maze, IEnumerable<Point> route)
         {
             var ylen = maze.GetLength(0);
             var xlen = maze.GetLength(1);
@@ -23,13 +28,13 @@ namespace MazeSolver
                 }
             }
 
-            var startPoint = escapeRoute.First();
+            var startPoint = route.First();
             strMaze[startPoint.Y, startPoint.X] = "S";
 
-            var endPoint = escapeRoute.Last();
+            var endPoint = route.Last();
             strMaze[endPoint.Y, endPoint.X] = "E";
 
-            foreach(var point in escapeRoute)
+            foreach(var point in route)
             {
                 if(strMaze[point.Y,point.X] == null)
                 {
