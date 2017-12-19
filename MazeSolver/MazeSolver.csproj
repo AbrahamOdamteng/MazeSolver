@@ -49,13 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MazePuzzle.cs" />
-    <Compile Include="MazeRunner.cs" />
+    <Compile Include="MazeSolver\MazePrinter.cs" />
+    <Compile Include="MazeSolver\MazePuzzle.cs" />
+    <Compile Include="MazeSolver\MazeRunner.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTests\MazePrinterTest.cs" />
     <Compile Include="UnitTests\MazePuzzleUnitTests.cs" />
     <Compile Include="UnitTests\MazeRunnerUnitTests.cs" />
-    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

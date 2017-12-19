@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
+using System.Linq;
 
 namespace MazeSolver
 {
-    class MazeRunner
+    static class MazeRunner
     {
         internal enum Direction{North, East, South, West };
 
         internal static IEnumerable<Point> SolveMaze(int[,] maze, Point startPoint, Point endPoint)
         {
             var breadCrumbs = new Stack<Point>();
+            breadCrumbs.Push(startPoint);
+
             if (startPoint == endPoint) return breadCrumbs;
 
-            breadCrumbs.Push(startPoint);
+            MarkCellAsVisited(maze, startPoint);
+
             while (breadCrumbs.Any())
             {
                 var newPos = MoveInAnyValidDirection(maze, breadCrumbs.Peek());
@@ -25,22 +26,25 @@ namespace MazeSolver
                     if (breadCrumbs.Any())
                     {
                         var currentPos = breadCrumbs.Pop();
-                        MarkCellAsVisited(maze, currentPos);
                     }
                 }
                 else
                 {
+                    MarkCellAsVisited(maze, (Point)newPos);
                     breadCrumbs.Push((Point)newPos);
                 }
 
-                if (breadCrumbs.Any() && breadCrumbs.Peek() == endPoint) return breadCrumbs;
+                if (breadCrumbs.Any() && breadCrumbs.Peek() == endPoint)
+                {
+                    return new List<Point>(breadCrumbs.Reverse());
+                }
             }
             return null;
         }
 
         internal static Point? MoveInAnyValidDirection(int[,] maze, Point currentPos)
         {
-            if (!IsValidPosition(maze, currentPos))
+            if (!IsLegalPosition(maze, currentPos))
             {
                 var msg = string.Format("Current position {0} is invalid for the current maze", currentPos);
                 throw new ArgumentException(msg);
@@ -75,15 +79,25 @@ namespace MazeSolver
                 default:
                     throw new ArgumentException(string.Format("Direction {0} is not recognised)", direction));
             }
-            if (IsValidPosition(maze, newPos)) return newPos;
+            if (IsUnvisitedPosition(maze, newPos)) return newPos;
 
             return null;
         }
 
-        internal static bool IsValidPosition(int[,] maze, Point pos)
+        internal static bool IsLegalPosition(int[,] maze, Point pos)
         {
             if (pos.X < 0 || pos.Y < 0) return false;
             if (pos.Y >= maze.GetLength(0) || pos.X >= maze.GetLength(1)) return false;
+
+            var val = maze[pos.Y, pos.X];
+            if (val == 1) return false;//You are standing in a wall.
+
+            return true;
+        }
+
+        internal static bool IsUnvisitedPosition(int[,] maze, Point pos)
+        {
+            if (!IsLegalPosition(maze, pos)) return false;
 
             var val = maze[pos.Y, pos.X];
             if (val == 0) return true;
