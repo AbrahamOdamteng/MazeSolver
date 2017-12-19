@@ -6,8 +6,23 @@ namespace MazeSolver
 {
     public class MazePuzzle
     {
+        /// <summary>
+        /// The starting position within the maze.
+        /// </summary>
         internal Point StartPoint { get; set; }
+
+        /// <summary>
+        /// The desired finish position within the maze.
+        /// </summary>
         internal Point EndPoint { get; set; }
+
+        /// <summary>
+        /// A multidimensional array that represents that maze.
+        /// The following values have the followi
+        /// 0 : Represent corridors.
+        /// 1 : Represent walls.
+        /// 2 : Represent corridors that have been visited.
+        /// </summary>
         internal int[,] Maze { get; set; }
 
         /// <summary>
